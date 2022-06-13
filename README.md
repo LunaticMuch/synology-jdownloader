@@ -1,6 +1,6 @@
 # JDownloader configuration for DSM7
 
-This document helps with the setup of a startup script for running JDownloader on Synology with DSM7
+This document helps with the setup of a startup script for running (JDownloader)[https://jdownloader.org] on Synology with DSM7
 
 ## Intro
 
