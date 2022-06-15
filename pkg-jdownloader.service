@@ -4,13 +4,15 @@ After=syslog.target network.target
 
 [Service]
 SuccessExitStatus=143
-Type=simple
+Type=forking
 
 WorkingDirectory=/volume1/@appstore/JDownloader
-ExecStart=/bin/bash -c "/usr/local/jdk-18.0.1.1/bin/java -jar JDownloader.jar" 
+ExecStart=/volume1/@appstore/JDownloader/start.sh
 TimeoutStartSec=3600
 TimeoutStopSec=3600
 RemainAfterExit=true
+PIDFile=/volume1/@appstore/JDownloader/JDownloader.pid
+
 
 [Install]
 WantedBy=multi-user.target
