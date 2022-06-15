@@ -1,6 +1,6 @@
 # JDownloader configuration for DSM7
 
-This document helps with the setup of a startup script for running (JDownloader)[https://jdownloader.org] on Synology with DSM7
+This document helps with the setup of a startup script for running [JDownloader](https://jdownloader.org) on Synology with DSM7
 
 ## Intro
 
@@ -14,7 +14,7 @@ This page will help you to configure your Synology to automatically start, resta
 - Your Synology must be connected to internet
 - You need a basic understand of how a terminal works
 - You need already to have JDownloader installed on your Synology
-- You need to be able to connect from your computer to the Synology using SSH (if on Windows, check (Putty)[https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html])
+- You need to be able to connect from your computer to the Synology using SSH (if on Windows, check [Putty](https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html))
 
 ## Usage
 
@@ -22,7 +22,9 @@ This page will help you to configure your Synology to automatically start, resta
 
 _You can skip this section if you already have Java installed or you prefer to follow another documented method._
 
-Login to your Synology using SSH and download the (latest JDK)[https://www.oracle.com/java/technologies/downloads/] (Oracle provides a stable URL for JDK which requires no login, so it's easier) from Oracle as following:
+**Using Oracle JDK/JRE is an option that requires you to adhere to Oracle Licence, Terms and Conditions. If you wish to go for an alternative, you can consider the version distributed by Synology,[Adoptiom](https://adoptium.net) or [OpenJDK](https://openjdk.org)**
+
+Login to your Synology using SSH and download the [latest JDK](https://www.oracle.com/java/technologies/downloads/) (Oracle provides a stable URL for JDK which requires no login, so it's easier) from Oracle as following:
 
 ```bash
 curl https://download.oracle.com/java/17/latest/jre-17_linux-x64_bin.tar.gz -o jre.tgz
@@ -126,6 +128,32 @@ WantedBy=multi-user.target
 ## Limits
 
 The script can accep additional parameters but it's not so flexible right not. `ExecStart` is required to run a `bash` script with the full path because this is the requirement of `systemd`. I plan to improve it, but for now it's fine and it's actually a script that you create and forget because it works.
+
+## Frequently Asked Question
+
+### I made a change to the script file, but now it does not work anymore
+
+If you change the script file, you need to reload `systemd` as following
+
+```bash
+sudo systemctl daemon-reload
+```
+
+### How can I monitor what the service is doing?
+
+You have few options here. The first is to run
+
+```bash
+sudo systemctl status pkg-jdownloader.service -l
+```
+
+This will return you the service status and the last few lines logged by the service. The log won't be complete. If you need something that allow you to keep an eye on the service, you can use the `journalctl` command as following
+
+```bash
+journalctl -fu pkg-jdownloader.service
+```
+
+This will remain in tail until you issue a CTRL-C
 
 ## Disclaimer
 
