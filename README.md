@@ -22,33 +22,40 @@ This page will help you to configure your Synology to automatically start, resta
 
 _You can skip this section if you already have Java installed or you prefer to follow another documented method._
 
-**Using Oracle JDK/JRE is an option that requires you to adhere to Oracle Licence, Terms and Conditions. If you wish to go for an alternative, you can consider the version distributed by Synology,[Adoptiom](https://adoptium.net) or [OpenJDK](https://openjdk.org)**
+**Any JRE/JDK can work. I personally use [Azul Zulu](https://www.azul.com/downloads/#zulu) which is based on OpenJDK**
 
-Login to your Synology using SSH and download the [latest JDK](https://www.oracle.com/java/technologies/downloads/) (Oracle provides a stable URL for JDK which requires no login, so it's easier) from Oracle as following:
+Login to your Synology using SSH and download the Java Runtime Environment with the following command
 
 ```bash
-curl https://download.oracle.com/java/17/latest/jre-17_linux-x64_bin.tar.gz -o jre.tgz
+curl https://cdn.azul.com/zulu/bin/zulu21.32.17-ca-jre21.0.2-linux_x64.tar.gz -o azul.tgz
 ```
 
 Now, uncompress the JDK into `/usr/local` as following
 
 ```bash
-sudo tar -xzf jdk.tgz -C /usr/local
+sudo tar -xzf azul.tgz -C /usr/local
 ```
 
 If you wish, you can confirm the operation with the following command
 
 ```bash
-sudo ls -ltd /usr/local/jdk*
+sudo ls -ltd /usr/local/*
 ```
 
-I use a JDK 1.17 under `/usr/local` and I have a symlink to it. This is what you would see (I removed additional directories):
+You should see a directory as `zulu21.32.17-ca-jre21.0.2-linux_x64`
+I would suggest you to link the JRE as following:
+
+```bash
+sudo ln -sf /usr/local/zulu21.32.17-ca-jre21.0.2-linux_x64 /usr/local/java
+```
+
+You cna further confirm the operation with the following:
 
 ```bash
 stefano@synology:~$ sudo ls -lt  /usr/local/
 total 44
-lrwxrwxrwx  1 root  root    12 Jun 13 09:28 java -> jdk-17.0.3.1
-drwx------  9 root  root  4096 Jun 13 09:27 jdk-17.0.3.1
+lrwxrwxrwx  1 root root   35 Feb 16 09:59 java -> zulu21.32.17-ca-jre21.0.2-linux_x64
+drwxr-xr-x  6 root root 4096 Jan  9 19:42 zulu21.32.17-ca-jre21.0.2-linux_x64
 ```
 
 ### Install the script
